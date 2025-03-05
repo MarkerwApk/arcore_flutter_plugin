@@ -632,4 +632,10 @@ class ArCoreView(val activity: Activity, context: Context, messenger: BinaryMess
         node?.localPosition = parseVector3(call.arguments as HashMap<String, Any>)
         result.success(null)
     }*/
+
+    private fun onImageDetected(distance: Float) {
+        val map: HashMap<String, Any> = HashMap()
+        map["distance"] = distance
+        methodChannel.invokeMethod("onImageDistanceUpdate", map)
+    }
 }
