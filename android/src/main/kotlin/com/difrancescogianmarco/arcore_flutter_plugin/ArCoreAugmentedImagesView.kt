@@ -70,8 +70,7 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
                             anchorNode.anchor = centerPoseAnchor
                             augmentedImageMap[augmentedImage.index] = Pair.create(augmentedImage, anchorNode)
                         }
-
-                        sendAugmentedImageToFlutter(augmentedImage)
+                        sendAugmentedImageToFlutter(augmentedImage, arSceneView?.arFrame?.camera?.pose)
                     }
 
                     TrackingState.STOPPED -> {
@@ -90,17 +89,20 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
         }
     }
 
-    private fun sendAugmentedImageToFlutter(augmentedImage: AugmentedImage) {
+    private fun sendAugmentedImageToFlutter(augmentedImage: AugmentedImage, cameraPose: Pose?) {
         val map: HashMap<String, Any> = HashMap<String, Any>()
         map["name"] = augmentedImage.name
         map["index"] = augmentedImage.index
         map["extentX"] = augmentedImage.extentX
         map["extentZ"] = augmentedImage.extentZ
         map["centerPose"] = FlutterArCorePose.fromPose(augmentedImage.centerPose).toHashMap()
+        if(cameraPose != null){
+            map["cameraPose"] = FlutterArCorePose.fromPose(cameraPose).toHashMap()
+        }
         map["trackingMethod"] = augmentedImage.trackingMethod.ordinal
         activity.runOnUiThread {
             methodChannel.invokeMethod("onTrackingImage", map)
-            sendDistanceToAugmentedImage(augmentedImage)
+            //sendDistanceToAugmentedImage(augmentedImage)
         }
     }
 
