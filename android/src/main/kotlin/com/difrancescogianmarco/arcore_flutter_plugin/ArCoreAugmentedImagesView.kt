@@ -106,19 +106,19 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
         }
     }
 
-    private fun sendDistanceToAugmentedImage(image: AugmentedImage) {
-        // Calculate the distance from the camera to the detected image
-        val cameraPose = arSceneView?.arFrame?.camera?.displayOrientedPose
-        val imageCenterPose = image.centerPose
-        val cameraVector = cameraPose?.translation()
-        val imageVector = imageCenterPose.translation()
-
-
-        // Call the method to send the distance to Flutter
-        if (distance != null) {
-            onImageDetected(distance)
-        }
-    }
+//    private fun sendDistanceToAugmentedImage(image: AugmentedImage) {
+//        // Calculate the distance from the camera to the detected image
+//        val cameraPose = arSceneView?.arFrame?.camera?.displayOrientedPose
+//        val imageCenterPose = image.centerPose
+//        val cameraVector = cameraPose?.translation()
+//        val imageVector = imageCenterPose.translation()
+//
+//
+//        // Call the method to send the distance to Flutter
+//        if (distance != null) {
+//            onImageDetected(distance)
+//        }
+//    }
 
 /*    fun setImage(image: AugmentedImage, anchorNode: AnchorNode) {
         if (!mazeRenderable.isDone) {
