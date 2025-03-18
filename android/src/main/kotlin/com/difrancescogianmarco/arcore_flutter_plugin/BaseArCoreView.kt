@@ -85,7 +85,10 @@ open class BaseArCoreView(val activity: Activity, context: Context, messenger: B
     }
 
     override fun getView(): View {
-        return arSceneView as View
+        if(arSceneView == null){
+            arSceneView = ArSceneView(activity)
+        }
+        return arSceneView
     }
 
     override fun dispose() {

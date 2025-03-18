@@ -598,44 +598,4 @@ class ArCoreView(val activity: Activity, context: Context, messenger: BinaryMess
            }
         }
     }
-
-    /* private fun tryPlaceNode(tap: MotionEvent?, frame: Frame) {
-        if (tap != null && frame.camera.trackingState == TrackingState.TRACKING) {
-            for (hit in frame.hitTest(tap)) {
-                val trackable = hit.trackable
-                if (trackable is Plane && trackable.isPoseInPolygon(hit.hitPose)) {
-                    // Create the Anchor.
-                    val anchor = hit.createAnchor()
-                    val anchorNode = AnchorNode(anchor)
-                    anchorNode.setParent(arSceneView?.scene)
-
-                    ModelRenderable.builder()
-                            .setSource(activity.applicationContext, Uri.parse("TocoToucan.sfb"))
-                            .build()
-                            .thenAccept { renderable ->
-                                val node = Node()
-                                node.renderable = renderable
-                                anchorNode.addChild(node)
-                            }.exceptionally { throwable ->
-                                Log.e(TAG, "Unable to load Renderable.", throwable);
-                                return@exceptionally null
-                            }
-                }
-            }
-        }
-
-    }*/
-
-    /*    fun updatePosition(call: MethodCall, result: MethodChannel.Result) {
-        val name = call.argument<String>("name")
-        val node = arSceneView?.scene?.findByName(name)
-        node?.localPosition = parseVector3(call.arguments as HashMap<String, Any>)
-        result.success(null)
-    }*/
-
-//    private fun onImageDetected(distance: Float) {
-//        val map: HashMap<String, Any> = HashMap()
-//        map["distance"] = distance
-//        methodChannel.invokeMethod("onImageDistanceUpdate", map)
-//    }
 }
