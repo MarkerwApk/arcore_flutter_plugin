@@ -4,6 +4,7 @@ class ArCoreAugmentedImage {
   String name;
   int index;
   ArCorePose centerPose;
+  ArCorePose? cameraPose;
   TrackingMethod trackingMethod;
   double extentX;
   double extentZ;
@@ -14,6 +15,7 @@ class ArCoreAugmentedImage {
         this.extentX = map['extentX'],
         this.extentZ = map['extentZ'],
         this.centerPose = ArCorePose.fromMap(map['centerPose']),
+        this.cameraPose = ArCorePose.fromMap(map['cameraPose']),
         this.trackingMethod = TrackingMethod.values[map['trackingMethod']];
 }
 

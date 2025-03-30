@@ -70,8 +70,7 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
                             anchorNode.anchor = centerPoseAnchor
                             augmentedImageMap[augmentedImage.index] = Pair.create(augmentedImage, anchorNode)
                         }
-
-                        sendAugmentedImageToFlutter(augmentedImage)
+                        sendAugmentedImageToFlutter(augmentedImage, arSceneView?.arFrame?.camera?.pose)
                     }
 
                     TrackingState.STOPPED -> {
@@ -90,18 +89,36 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
         }
     }
 
-    private fun sendAugmentedImageToFlutter(augmentedImage: AugmentedImage) {
+    private fun sendAugmentedImageToFlutter(augmentedImage: AugmentedImage, cameraPose: Pose?) {
         val map: HashMap<String, Any> = HashMap<String, Any>()
         map["name"] = augmentedImage.name
         map["index"] = augmentedImage.index
         map["extentX"] = augmentedImage.extentX
         map["extentZ"] = augmentedImage.extentZ
         map["centerPose"] = FlutterArCorePose.fromPose(augmentedImage.centerPose).toHashMap()
+        if(cameraPose != null){
+            map["cameraPose"] = FlutterArCorePose.fromPose(cameraPose).toHashMap()
+        }
         map["trackingMethod"] = augmentedImage.trackingMethod.ordinal
         activity.runOnUiThread {
             methodChannel.invokeMethod("onTrackingImage", map)
+            //sendDistanceToAugmentedImage(augmentedImage)
         }
     }
+
+//    private fun sendDistanceToAugmentedImage(image: AugmentedImage) {
+//        // Calculate the distance from the camera to the detected image
+//        val cameraPose = arSceneView?.arFrame?.camera?.displayOrientedPose
+//        val imageCenterPose = image.centerPose
+//        val cameraVector = cameraPose?.translation()
+//        val imageVector = imageCenterPose.translation()
+//
+//
+//        // Call the method to send the distance to Flutter
+//        if (distance != null) {
+//            onImageDetected(distance)
+//        }
+//    }
 
 /*    fun setImage(image: AugmentedImage, anchorNode: AnchorNode) {
         if (!mazeRenderable.isDone) {
