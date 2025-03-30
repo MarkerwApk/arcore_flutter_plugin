@@ -56,7 +56,6 @@ class ArCoreController {
   ArCorePlaneHandler? onPlaneDetected;
   String trackingState = '';
   ArCoreAugmentedImageTrackingHandler? onTrackingImage;
-  StringResultHandler? onImageDistanceUpdate;
 
   init() async {
     try {
@@ -121,12 +120,6 @@ class ArCoreController {
           print('Toggling Plane Renderer Visibility');
         }
         togglePlaneRenderer();
-        break;
-      case 'onImageDistanceUpdate':
-        if (onImageDistanceUpdate != null) {
-          final distance = call.arguments['distance'];
-          onImageDistanceUpdate!(distance);
-        }
         break;
       default:
         if (debug ?? true) {
